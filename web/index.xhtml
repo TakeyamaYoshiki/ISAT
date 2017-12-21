@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>ログイン</title>
+         <link rel="stylesheet" type="text/css" href="resources/css/newcss.css"/>
+    </h:head>
+    <h:body>
+    <div class="left-box-1">
+            <h1>ISAT</h1>
+            <img src="image/ロゴ.png" alt="[写真]" class="example1"></img>
+            <h3>-Integration Student Assist Tool-</h3>
+            <div class="left-box-2">
+            <h2>ログイン</h2>
+        <h:form>
+            ID<h:inputText id="number" value="#{lb.id}" >
+                <f:validateLength maximum="10" minimum="10" />
+        </h:inputText> 
+         <h:message for="number" styleClass="error" /><br />
+         
+         パスワード<h:inputSecret id="pwd" value="#{lb.password}" >
+             <f:validateLength maximum="20" minimum="1" />
+        </h:inputSecret> 
+         <h:message for="pwd" styleClass="error" /><br />
+         <h:commandButton action="#{lb.auth()}" value="送信"/>
+        </h:form>
+        </div>
+        </div>  
+    </h:body>
+</html>

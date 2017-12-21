@@ -1,0 +1,178 @@
+body{
+    width: 999px;
+    height: 100%;
+    margin:0px auto;
+    background-color: whitesmoke;
+}
+
+.head{
+    width:100%;
+    margin:0px auto;
+}
+
+.top-head{
+    height: 120px;
+}
+
+.left-head{
+    width: 333px;
+    height: 120px;
+    float: left;
+}
+
+.left-head img{
+    width: 64px;
+    height: 64px;
+    padding-top: 21.440px;
+}
+
+.center-head{
+    width: 333px;
+    height: 120px;
+    float:left;
+    text-align: center;
+}
+
+.right-head{
+    width:333px;
+    height:120px;
+    float: left;
+    text-align: right;
+}
+
+.right-head input{
+    margin-top: 94px;
+}
+
+.nav{
+    width: 999px;
+}
+
+.nav ul{
+        padding: 0px;
+}
+
+.nav li{
+    list-style:none;
+    display: inline-block;
+    text-align: center;
+}
+
+.nav img{
+    width: 64px;
+    height: 64px;
+}
+
+.notice{
+    height: 122px;
+}
+
+.box1 {
+    float: left;
+    width: 497.5px;
+    height: 120px;
+    border:1px solid #000;
+}
+
+.box2 {
+    float: right;
+    width: 497.5px;
+    height: 120px;
+    border:1px solid #000;
+}
+
+
+h2{
+    width: 200px;
+    margin: 0px 0px 0px 0px;
+}
+
+/* 外枠部分 */
+div.y_data_area {
+  width: 500px;
+  height: 430px;
+  border-right: 1px solid #CCC;
+  border-bottom: 1px solid #CCC;
+  border-left: 1px solid #CCC;
+}
+ 
+/* タイトル部分 */
+table.y_data_title {
+  width: 500px;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0; /* tableのcellspacing="0"の代わり */
+}
+ 
+table.y_data_title th {
+  border-top: 1px solid #CCC;
+  background: #EEF1F4;
+}
+ 
+table.y_data_title th,
+table.y_data_title td {
+  padding: 2px;
+  border-right: 1px solid #CCC;
+  border-bottom: 1px solid #CCC;
+}
+ 
+table.y_data_title th.r_none,
+table.y_data_title td.r_none {
+  border-right: none; /* 右ボーダーの重なりを防止 */
+}
+
+
+/* データ部分 */
+div.y_scroll_box {
+  width: 500px;
+  max-height: 430px;
+  /*height: auto !important; /* IE6 max-height対応 */
+  height: 400px;　/* IE6 max-height対応 */
+  overflow-x: hidden; /* 横スクロール非表示 */
+  overflow-y: scroll; /* 縦スクロール */
+  margin: 0px 0px 10px 0px;
+}
+ 
+div.y_hidden {
+  overflow: hidden; /* IE系でデータ部分のテーブルをドラッグした際のズレを防止 */
+  padding: 0 0 10px; /* スクロール仕切った際の下ボーダーの重なりを防止 */
+}
+ 
+table.y_data {
+  width: 500px;
+  border-collapse: separate;
+  border-spacing: 0; /* tableのcellspacing="0"の代わり */
+  table-layout: fixed;　/* 内容を固定 */
+}
+ 
+table.y_data th,
+table.y_data td {
+  padding: 2px;
+  border-right: 1px solid #CCC;
+  border-bottom: 1px solid #CCC;
+}
+ 
+table.y_data td {
+  overflow: hidden; /* データが幅を超えたとき非表示に */
+  white-space: nowrap; /* データの折り返しを防止 */
+}
+ 
+table.y_data td p {
+  margin: 0; /* 余分なマージンを消去 */
+}
+ 
+/* IE6 */
+table.y_data_title,
+table.y_data {
+  _border-collapse: collapse; /* IE6がborder-spacing: 0;に対応していないので */
+}
+ 
+/* IE7 */
+*:first-child+html table.y_data_title,
+*:first-child+html table.y_data {
+  border-collapse: collapse; /* IE7がborder-spacing: 0;に対応していないので */
+}
+
+form{
+    float: right;
+}

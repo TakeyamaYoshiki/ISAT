@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>スケジュール管理</title>
+        <link rel="stylesheet" type="text/css" href="resources/css/schedule.css"/> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <body>
+  
+         <!--ここからhead-->
+        <div class="head">
+            <div class="top-head">
+                <div class="left-head">
+                    <img src="image/ロゴ.png" alt="[写真]"></img>
+                </div>
+        
+                <div class="center-head">
+                    <h1 class="title">スケジュール管理</h1>
+                </div>
+                
+                <div class="right-head">
+                    <form action="" method="post">
+                        <input type="submit" name="done" value="プロフィール設定" />
+                        <input type="submit" name="to_correct" value="ログアウト"/>
+                    </form>
+                </div>
+            </div>
+        
+            <div class="nav">
+                <ul>
+                    <li><a href="#"><p><img src="image/掲示板.png" alt="[写真]" ></img></p>掲示板</a></li>
+                    <li><a href="#"><p><img src="image/スケジュール.png" alt="[写真]" ></img></p>スケジュール</a></li>
+                    <li><a href="#"><p><img src="image/アンケート.png" alt="[写真]" ></img></p>アンケート</a></li>
+                    <li><a href="#"><p><img src="image/伝達.png" alt="[写真]" ></img></p>伝達</a></li>
+                    <li><a href="#"><p><img src="image/todo.jpg" alt="[写真]" ></img></p>ToDo</a></li>
+                    <li><a href="#"><p><img src="image/キャビネット.png" alt="[写真]" ></img></p>キャビネット</a></li>
+                    <li><a href="#"><p><img src="image/info.png" alt="[写真]" ></img></p>info</a></li>
+                </ul>
+            </div>
+        
+            <div class="notice">
+                <div class="box1">
+                    <p>お知らせ</p>
+                </div>
+        
+                <div class="box2">
+                    <p>お知らせ</p>
+                </div>
+            </div>
+        </div>
+        <!--ここまでhead-->  
+        
+        
+        
+        <h:form>
+    <p:growl id="messages" showDetail="true" />
+ 
+    <h:panelGrid columnClasses="value">
+        <h3 style="margin-top: 0">カレンダー</h3>
+        <p:schedule id="schedule" value="#{scheduleView.eventModel}" widgetVar="myschedule" timeZone="GMT+9">
+ 
+            <p:ajax event="dateSelect" listener="#{scheduleview.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+            <p:ajax event="eventSelect" listener="#{scheduleview.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+            <p:ajax event="eventMove" listener="#{scheduleview.onEventMove}" update="messages" />
+            <p:ajax event="eventResize" listener="#{scheduleview.onEventResize}" update="messages" />
+ 
+        </p:schedule>
+    </h:panelGrid>
+ 
+    <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
+        <h:panelGrid id="eventDetails" columns="2">
+            <p:outputLabel for="title" value="Title:" />
+            <p:inputText id="title" value="#{scheduleView.sch.title}" required="true" />
+ 
+            <p:outputLabel for="from" value="From:" />
+            <p:calendar id="from" value="#{scheduleView.sch.SDate}" timeZone="Asia/Tokyo" pattern="yyyy/mm/dd hh:mm"/>
+ 
+            <p:outputLabel for="to" value="To:" />
+            <p:calendar id="to" value="#{scheduleView.sch.EDate}" timeZone="Asia/Tokyo" pattern="yyyy/mm/dd hh:mm"/>
+            
+            <p:outputLabel for="place" value="place:" />
+            <p:inputText id="place" value="#{scheduleView.sch.place}" required="true"/>
+            
+            <p:outputLabel for="Content" value="Content:" />
+            <p:inputText id="Content" value="#{scheduleView.sch.content}" required="true"/>
+            
+
+ 
+            <p:outputLabel for="allDay" value="All Day:" />
+            <h:selectBooleanCheckbox id="allDay" value="#{scheduleview.event.allDay}" />
+ 
+            <p:commandButton type="reset" value="Reset" action="#{scheduleview.create()}" />
+            <h:commandButton value="save" action="#{scheduleView.create()}"/>
+            <p:commandButton type="save" value="Save" action="#{scheduleview.create()}"  />
+            <!--oncomplete="PF('myschedule').update();PF('eventDialog').hide();"-->
+        </h:panelGrid>
+    </p:dialog>    
+</h:form>
+<style type="text/css">
+    .value {
+        width: 480px;
+    }
+</style>
+        
+        
+        
+        
+    </body>
+    <h2>本日の予定</h2>
+    
+    <select name="year">
+        <option value="2017">2017</option>
+        <option value="2018">2018</option>
+        <option value="2019">2019</option>
+        <option value="2020">2020</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+        <option value="2024">2024</option>
+        <option value="2025">2025</option>
+        <option value="2026">2026</option>
+        <option value="2027">2027</option>
+        <option value="2028">2028</option>
+        <option value="2029">2029</option>
+        <option value="2030">2030</option>
+    </select>
+    <select name="month">
+        <option value="jan">1月</option>
+        <option value="feb">2月</option>
+        <option value="mar">3月</option>
+        <option value="apr">4月</option>
+        <option value="may">5月</option>
+        <option value="jun">6月</option>
+        <option value="jul">7月</option>
+        <option value="aug">8月</option>
+        <option value="sep">9月</option>
+        <option value="oct">10月</option>
+        <option value="nov">11月</option>
+        <option value="dec">12月</option>
+    </select>
+    <select name="day">
+        <option value="1">1日</option>
+        <option value="2">2日</option>
+        <option value="3">3日</option>
+        <option value="4">4日</option>
+        <option value="5">5日</option>
+        <option value="6">6日</option>
+        <option value="7">7日</option>
+        <option value="8">8日</option>
+        <option value="9">9日</option>
+        <option value="10">10日</option>
+        <option value="11">11日</option>
+        <option value="12">12日</option>
+        <option value="13">13日</option>
+        <option value="14">14日</option>
+        <option value="15">15日</option>
+        <option value="16">16日</option>
+        <option value="17">17日</option>
+        <option value="18">18日</option>
+        <option value="19">19日</option>
+        <option value="20">120日</option>
+        <option value="21">21日</option>
+        <option value="22">22日</option>
+        <option value="23">23日</option>
+        <option value="24">24日</option>
+        <option value="25">25日</option>
+        <option value="26">26日</option>
+        <option value="27">27日</option>
+        <option value="8">28日</option>
+        <option value="29">29日</option>
+        <option value="30">30日</option>
+        <option value="31">31日</option>
+        
+        
+        
+        
+        
+    </select>
+    
+    
+    
+    <!-- 外枠 -->
+<div class="y_data_area">
+    <!-- タイトル -->
+    <table class="y_data_title">
+        <col style="width: 25%;" />
+        <col style="width: 25%;" />
+        <tr>
+            <th>予定</th>
+            <th class="r_none">時間割</th>
+        </tr>
+    </table>
+    <!-- /タイトル -->
+    <!-- データ -->
+    <div class="y_scroll_box">
+        <div class="y_hidden">
+            <table class="y_data">
+                <col style="width: 5%;" />
+                <col style="width: 20%;" />
+                <col style="width: 6%;" />
+                <col style="width: 19%;" />                    
+                <tr>
+                    <td><p title="データデータデータデータデータデータデータデータデータ">0時</p></td>
+                    <td><p title="データ">データ</p></td>
+                    <td><p title="データ">1限</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">1時</p></td>
+                    <td><p title="データ">データ</p></td>
+                    <td><p title="データ">2限</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">2時</p></td>
+                    <td><p title="データ">データ</p></td>
+                    <td><p title="データ">3限</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">3時</p></td>
+                    <td><p title="データ">データ</p></td>
+                    <td><p title="データ">4限</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">4時</p></td>
+                    <td><p title="データ">データ</p></td>
+                    <td><p title="データ">放課後</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">5時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">6時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">7時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">8時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">9時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">10時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">11時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">12時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">13時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr><tr>
+                    <td><p title="データ">14時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">15時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">16時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">17時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">18時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">19時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">20時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">21時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">22時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">23時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                <tr>
+                    <td><p title="データ">24時</p></td>
+                    <td class="r_none"><p title="データ">データ</p></td>
+                </tr>
+                
+                
+            </table>
+        </div>
+    </div>
+    <!-- /データ -->
+</div>
+<!-- /外枠 -->
+
+
+    
+</html>
