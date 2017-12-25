@@ -9,11 +9,13 @@ import Ejb.ScheduleFacade;
 import Entity.Schedule;
 import Entity.UserData;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -40,6 +42,20 @@ import org.primefaces.model.ScheduleModel;
 @RequestScoped
 
 
+ 
+   /* @EJB
+    ScheduleFacade sf;
+    
+    public String create(){
+        UserData ud = new UserData();
+        ud.setUserId("st20170001");
+        sch.setOwner(ud);
+        sch.setScheduleId("sch00000000000008");
+        sf.create(sch);
+        return null;
+    }*/
+    
+    
 @ManagedBean
 @ViewScoped
 public class ScheduleView implements Serializable {
@@ -51,24 +67,48 @@ public class ScheduleView implements Serializable {
     private ScheduleEvent event = new DefaultScheduleEvent();
     
     private Schedule sch = new Schedule();
- 
+    
+    
     @EJB
     ScheduleFacade sf;
+    /*@EJB
+    Schedule s;*/
     
     public String create(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddhhmmss");
         UserData ud = new UserData();
         ud.setUserId("st20170001");
         sch.setOwner(ud);
-        sch.setScheduleId("sch00000000000003");
+        sch.setScheduleId("sch"+sdf.format(new Date()));
         sf.create(sch);
         return null;
     }
     
+    /*public List<Schedule> getAllSchedule(){
+        return sf.findAll();
+    }*/
+ 
     @PostConstruct
     public void init() {
-        Schedule schedule = new Schedule();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        Date d = cal.getTime();
+        cal.add(Calendar.WEEK_OF_YEAR, 2);
+        Date d2 = cal.getTime();
+        
+        /* スケジュールの取得 */
         eventModel = new DefaultScheduleModel();
-        eventModel.addEvent(new DefaultScheduleEvent(schedule.getTitle(), schedule.getSDate(), schedule.getEDate()));
+        List<Schedule> schList = getAllSch();
+        for(Schedule schData : schList){
+            eventModel.addEvent(new DefaultScheduleEvent(schData.getTitle(),schData.getSDate(),schData.getEDate()));
+        }
+        
+        
+        /*eventModel.addEvent(new DefaultScheduleEvent("Champions League Match", previousDay8Pm(), previousDay11Pm()));
+        eventModel.addEvent(new DefaultScheduleEvent("Birthday Party", today1Pm(), today6Pm()));
+        eventModel.addEvent(new DefaultScheduleEvent("Breakfast at Tiffanys", nextDay9Am(), nextDay11Am()));
+        eventModel.addEvent(new DefaultScheduleEvent("Plant the new garden stuff", theDayAfter3Pm(), fourDaysLater3pm()));*/
+        
          
         lazyEventModel = new LazyScheduleModel() {
              
@@ -190,16 +230,6 @@ public class ScheduleView implements Serializable {
     public void setEvent(ScheduleEvent event) {
         this.event = event;
     }
-
-    public Schedule getSch() {
-        return sch;
-    }
-
-    public void setSch(Schedule sch) {
-        this.sch = sch;
-    }
-    
-    
      
     public void addEvent(ActionEvent actionEvent) {
         if(event.getId() == null)
@@ -233,4 +263,29 @@ public class ScheduleView implements Serializable {
     private void addMessage(FacesMessage message) {
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
-} 
+
+    /* データ取得 */
+    public List<Schedule> getAllSch(){
+        return sf.findAll();
+    }
+    
+    /* セッターゲッター */
+    public Schedule getSch() {
+        return sch;
+    }
+
+    public void setSch(Schedule sch) {
+        this.sch = sch;
+    }
+
+   /* public List<Schedule> getSlist() {
+        return slist;
+    }
+
+    public void setSlist(List<Schedule> slist) {
+        this.slist = slist;
+    }*/
+    
+    
+    
+}

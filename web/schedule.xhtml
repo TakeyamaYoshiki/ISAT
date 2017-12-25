@@ -60,62 +60,86 @@ and open the template in the editor.
         </div>
         <!--ここまでhead-->  
         
-        
+
         
         <h:form>
     <p:growl id="messages" showDetail="true" />
  
     <h:panelGrid columnClasses="value">
         <h3 style="margin-top: 0">カレンダー</h3>
-        <p:schedule id="schedule" value="#{scheduleView.eventModel}" widgetVar="myschedule" timeZone="GMT+9">
- 
-            <p:ajax event="dateSelect" listener="#{scheduleview.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-            <p:ajax event="eventSelect" listener="#{scheduleview.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
-            <p:ajax event="eventMove" listener="#{scheduleview.onEventMove}" update="messages" />
-            <p:ajax event="eventResize" listener="#{scheduleview.onEventResize}" update="messages" />
+        <p:schedule id="schedule" value="#{scheduleView.eventModel}" widgetVar="myschedule" timeZone="GMT+2">
+            
+            <p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+            <p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+            <p:ajax event="eventMove" listener="#{scheduleView.onEventMove}" update="messages" />
+            <p:ajax event="eventResize" listener="#{scheduleView.onEventResize}" update="messages" />
  
         </p:schedule>
     </h:panelGrid>
  
     <p:dialog widgetVar="eventDialog" header="Event Details" showEffect="clip" hideEffect="clip">
         <h:panelGrid id="eventDetails" columns="2">
-            <p:outputLabel for="title" value="Title:" />
+            <p:outputLabel for="title" value="タイトル" />
             <p:inputText id="title" value="#{scheduleView.sch.title}" required="true" />
  
             <p:outputLabel for="from" value="From:" />
-            <p:calendar id="from" value="#{scheduleView.sch.SDate}" timeZone="Asia/Tokyo" pattern="yyyy/mm/dd hh:mm"/>
+            <p:calendar id="from" value="#{scheduleView.sch.SDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
  
             <p:outputLabel for="to" value="To:" />
-            <p:calendar id="to" value="#{scheduleView.sch.EDate}" timeZone="Asia/Tokyo" pattern="yyyy/mm/dd hh:mm"/>
-            
-            <p:outputLabel for="place" value="place:" />
-            <p:inputText id="place" value="#{scheduleView.sch.place}" required="true"/>
-            
-            <p:outputLabel for="Content" value="Content:" />
-            <p:inputText id="Content" value="#{scheduleView.sch.content}" required="true"/>
-            
-
+            <p:calendar id="to" value="#{scheduleView.sch.EDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm"/>
  
-            <p:outputLabel for="allDay" value="All Day:" />
-            <h:selectBooleanCheckbox id="allDay" value="#{scheduleview.event.allDay}" />
+            <p:outputLabel for="place" value="場所" />
+            <p:inputText id="place" value="#{scheduleView.sch.place}" required="true" />
+            
+            <p:outputLabel for="Contents" value="内容" />
+            <p:inputText id="Contents" value="#{scheduleView.sch.content}" required="true" />
+            
+            <p:outputLabel for="allDay" value="終日" />
+            <h:selectBooleanCheckbox id="allDay" value="#{scheduleView.event.allDay}" />
  
-            <p:commandButton type="reset" value="Reset" action="#{scheduleview.create()}" />
-            <h:commandButton value="save" action="#{scheduleView.create()}"/>
-            <p:commandButton type="save" value="Save" action="#{scheduleview.create()}"  />
-            <!--oncomplete="PF('myschedule').update();PF('eventDialog').hide();"-->
+            <p:commandButton type="reset" value="リセット" />
+            <p:commandButton id="addButton" value="保存" actionListener="#{scheduleView.create()}" oncomplete="PF('myschedule').update();PF('eventDialog').hide();" />
         </h:panelGrid>
-    </p:dialog>    
+    </p:dialog>
+    
+    
+        
+    
+    
 </h:form>
+ 
+<script type="text/javascript">
+    PrimeFaces.locales['tr'] = {
+        closeText: 'kapat',
+        prevText: 'geri',
+        nextText: 'ileri',
+        currentText: 'bugün',
+        monthNames: ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran',
+            'Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'],
+        monthNamesShort: ['Oca','Şub','Mar','Nis','May','Haz',
+            'Tem','Ağu','Eyl','Eki','Kas','Ara'],
+        dayNames: ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'],
+        dayNamesShort: ['Pz','Pt','Sa','Ça','Pe','Cu','Ct'],
+        dayNamesMin: ['Pz','Pt','Sa','Ça','Pe','Cu','Ct'],
+        weekHeader: 'Hf',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        month: 'Ay',
+        week: 'Hafta',
+        day: 'Gün',
+        allDayText : 'Tüm Gün'
+    };
+</script>
 <style type="text/css">
     .value {
         width: 480px;
     }
 </style>
         
-        
-        
-        
-    </body>
+</body>
+    
     <h2>本日の予定</h2>
     
     <select name="year">
